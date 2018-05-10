@@ -1,7 +1,9 @@
 package com.autolink.springboot.mq.rabbitMq;
 
+import com.autolink.springboot.mq.producer.HelloSender1;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -9,8 +11,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class RabbitMqApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+//    @Autowired
+//    private HelloSender1 helloSender1;
+
+    @Test
+    public void contextLoads() {
+        //helloSender1.send();
+        System.out.println("send message");
+    }
 
 }
