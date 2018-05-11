@@ -2,9 +2,7 @@ package com.autolink.springboot.mq.controlller;
 
 import com.autolink.springboot.mq.consumer.HelloReceiver1;
 import com.autolink.springboot.mq.consumer.UserReciever;
-import com.autolink.springboot.mq.producer.HelloSender1;
-import com.autolink.springboot.mq.producer.HelloSender2;
-import com.autolink.springboot.mq.producer.UserSender;
+import com.autolink.springboot.mq.producer.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,15 @@ public class RabbitTest {
     @Autowired
     private UserSender userSender;
 
+    @Autowired
+    private TopicSender topicSender;
+
+    @Autowired
+    private FanoutSender fanoutSender;
+
+    @Autowired
+    private CallBackSender callBackSender;
+
     /**
      * 单生产 但消费
      * @return
@@ -39,6 +46,9 @@ public class RabbitTest {
         return "";
     }
 
+    /**
+     * 单生产 多消费
+     */
     @PostMapping("/oneToMany")
     public void oneToMany(){
         for(int i=0;i<10;i++){
@@ -46,6 +56,9 @@ public class RabbitTest {
         }
     }
 
+    /**
+     * 多生产 多消费
+     */
     @PostMapping("manyToMany")
     public void manyToMany(){
         for(int i=0;i<10;i++){
@@ -54,10 +67,36 @@ public class RabbitTest {
         }
     }
 
+    /**
+     * 实体类传输
+     */
     @PostMapping("userTest")
     public void userTest(){
         userSender.send();
         log.info("user test");
+    }
+
+    /**
+     * topic
+     */
+    @PostMapping("topicSender")
+    public void topicSender(){
+        topicSender.send();
+        log.info("topic sender");
+    }
+
+    /**
+     * fanoutTest
+     */
+    @PostMapping("fanoutTest")
+    public void fanoutSender(){
+        fanoutSender.send();
+        log.info("fanout sender");
+    }
+
+    @PostMapping("callback")
+    public void callback(){
+        callBackSender.send();
     }
 
 }
