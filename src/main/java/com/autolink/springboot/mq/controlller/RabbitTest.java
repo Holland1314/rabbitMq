@@ -36,12 +36,16 @@ public class RabbitTest {
     @Autowired
     private CallBackSender callBackSender;
 
+    @Autowired
+    private QVehicleSender qVehicleSender;
+
     /**
      * 单生产 但消费
+     *
      * @return
      */
     @PostMapping("/hello")
-    public String hello(){
+    public String hello() {
         helloSender1.send("hello1");
         return "";
     }
@@ -50,9 +54,9 @@ public class RabbitTest {
      * 单生产 多消费
      */
     @PostMapping("/oneToMany")
-    public void oneToMany(){
-        for(int i=0;i<10;i++){
-            helloSender1.send("helloRabbit"+i);
+    public void oneToMany() {
+        for (int i = 0; i < 10; i++) {
+            helloSender1.send("helloRabbit" + i);
         }
     }
 
@@ -60,10 +64,10 @@ public class RabbitTest {
      * 多生产 多消费
      */
     @PostMapping("manyToMany")
-    public void manyToMany(){
-        for(int i=0;i<10;i++){
-            helloSender1.send("helloRabbit1:"+i);
-            helloSender2.send("helloRabbit2:"+i);
+    public void manyToMany() {
+        for (int i = 0; i < 10; i++) {
+            helloSender1.send("helloRabbit1:" + i);
+            helloSender2.send("helloRabbit2:" + i);
         }
     }
 
@@ -71,7 +75,7 @@ public class RabbitTest {
      * 实体类传输
      */
     @PostMapping("userTest")
-    public void userTest(){
+    public void userTest() {
         userSender.send();
         log.info("user test");
     }
@@ -80,7 +84,7 @@ public class RabbitTest {
      * topic
      */
     @PostMapping("topicSender")
-    public void topicSender(){
+    public void topicSender() {
         topicSender.send();
         log.info("topic sender");
     }
@@ -89,14 +93,24 @@ public class RabbitTest {
      * fanoutTest
      */
     @PostMapping("fanoutTest")
-    public void fanoutSender(){
+    public void fanoutSender() {
         fanoutSender.send();
         log.info("fanout sender");
     }
 
     @PostMapping("callback")
-    public void callback(){
+    public void callback() {
         callBackSender.send();
+    }
+
+
+
+    @PostMapping("qVehicle")
+    public void qVehicle(){
+        String msg = "hello q vehicle";
+        this.qVehicleSender.send(msg);
+        log.info("qVehicle Sender:"+msg);
+
     }
 
 }

@@ -49,6 +49,18 @@ public class RabbitMqApplication {
 	}
 	//===============以上是验证Fanout Exchange的队列==========
 
+	//===============以下是验证q_vehicle的队列==========
+	@Bean
+	public Queue vehicleQueue(){
+		return new Queue("q_vehicle");
+	}
+	@Bean
+	Binding bindingVehiccleQueue(Queue vehicleQueue, TopicExchange exchange) {
+		return BindingBuilder.bind(vehicleQueue).to(exchange).with("q_vehicle");
+	}
+
+	//===============以上是验证q_vehicle的队列==========
+
 
 	@Bean
 	TopicExchange exchange() {
